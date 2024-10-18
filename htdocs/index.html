@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html prefix="og: https://ogp.me/ns#">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <style>.caveat{font-family:"Caveat",cursive;font-optical-sizing:auto;font-weight:600;font-style:normal}nav{top:0;position:fixed;text-align:center;backdrop-filter:blur(8px);z-index:10000;width:100vw;background-color:#000000b0;box-shadow:#000 0 0 10px}.nx{font-size:27px;text-decoration:none}.lg{color:#fff}.ctl{font-size:12vh}body{animation:bg 15s linear infinite}@keyframes bg{0%{background-color:#111222}50%{background-color:#222333}100%{background-color:#111222}}.contentn{display:inline-block}.urlbtn{--bs-btn-color:#ffffff;--bs-btn-hover-bg:#555666;--bs-btn-bg:#222333}body{color:white;}</style>
+        <title>j0.si</title>
+        <meta property="og:title" content="j0.si">
+        <meta property="og:url" content="https://j0.si">
+        <meta name="description" content="Link shortener by j0.si">
+        <meta name="og:description" content="Link shortener by j0.si">
+        <meta name="application-name" content="j0.si">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+    </head>
+    <body class="text-center position-relative">
+        <nav class="nav justify-content-center">
+            <div class="nv">
+                <h3 class="caveat"><a href="./" class="nx lg">j0.si</a></h3>
+            </div>
+        </nav>
+        <div class="position-relative top-50 mx-auto text-center contentn" id="m">
+            <h1 class="caveat lg ctl">j0.si</h1>
+            <div id="a"></div>
+            <div class="py-2"></div>
+            <div class="input-group mb-3">
+            <form class="input-group justify-content-center" id="q" onsubmit="return false">
+                    <div class="input-group">
+                        <input class="form-control" type="url" placeholder="Enter a long url" style="width:50vw" name="link" id="l" minlength=1 required>
+                        <button class="btn btn-outline-secondary urlbtn" type="submit" id="sb" name="snd">Shorten long url</button>
+                    </div>
+                    <div>
+                        <div class="btn-group mt-2">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            options
+                            </button>
+                            <div class="mb-3">
+                                <ul class="dropdown-menu position-absolute" style="padding: 5px; width: 48vw; background-color: #333444; border-radius:8px">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon3" style="background-color:#222333;color:#fff;user-select:none;">https://j0.si/</span>
+                                        <input class="form-control" type="text" placeholder="Custom pathname (Optional, min: 3)" name="path" value="" minlength=3 id="ph">
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <p style="margin-top:-16px" id="msg"></p>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>const m=document.getElementById("m"),w=document.getElementById('sb'),q=document.getElementById('q');let h=0,v=0,x=0,y=0;document.addEventListener("mousemove",e=>{h=e.clientX-window.innerWidth/2,v=e.clientY-window.innerHeight/2}),setInterval(()=>{x+=(h/32-x)/16,y+=(v/32-y)/16,m.style.transform=`translate(${x}px,${y+.35*window.innerHeight}px)`},16);const u=new URLSearchParams(location.search);if(u.has("q")){let e=`<div class="alert alert-success" role="alert">Success! <a target="_blank" href="${location.origin}/${u.get("q")}">${location.origin}/${u.get("q")}</a></div>`,t=document.getElementById("a");t.innerHTML=e,history.replaceState(null,"",`${location.origin}${location.pathname}`)}const o=document.getElementById('msg');const b=document.getElementById('ph');b.addEventListener('invalid',()=>{o.textContent="Custom pathname must be at least 3 characters long.";});q.addEventListener('submit',()=>{w.disabled=1;$.post(`${location.origin}/shorten?url=${encodeURI(document.getElementById('l').value)}${b.value?`&link=${encodeURI(b.value)}`:""}`)})</script>
+    </body>
+</html>

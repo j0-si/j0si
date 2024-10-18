@@ -1,0 +1,14 @@
+{
+  "name": "j0si",
+  "version": "1.0.0",
+  "description": "j0.si rewrited to nodejs from original php",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
