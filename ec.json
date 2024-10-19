@@ -1,0 +1,9 @@
+[
+    "OK",
+    "URL_UNSET",
+    "PATH_NOT_ALLOWED",
+    "LINK_NOT_FOUND",
+    "PATH_TOO_SHORT",
+    "PATH_DUPLICATE",
+    "RESULT_NOT_SHORTENED"
+]
