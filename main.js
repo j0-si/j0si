@@ -32,64 +32,74 @@ app.post('/shorten', (req, res) => {
         console.log(`${new Date()} // ${req.ip}`)
         console.log(req.query);
         if (req.query.url) {
-            if (/[\+]+/.test(req.query.path)) {
-                res.status(400).send(ec(2))
+            const b = JSON.parse(fs.readFileSync('./blacklist.json'))
+            if (b.includes(new URL(req.query.url).hostname)) {
+                res.status(403).send(ec(8))
             } else {
-                let p, y = false;
-                const d = JSON.parse(fs.readFileSync('./links.json')), pd = d.map(i => i.path.replace(/^\//, ''))
-                if (req.query.path) {
-                    p = encodeURI(req.query.path.replace(/^\s+/, '').replace(/\s+$/, ''));
+                if (/[\+]+/.test(req.query.path)) {
+                    res.status(400).send(ec(2))
                 } else {
-                    let k = 0, l = 4;
-                    y = true;
-                    do {
-                        p = grs(l)
-                        k++;
-                        if (k % 100 === 0) {
-                            l++;
-                        }
-                    } while (pd.includes(p))
-                }
-                if (p.length < 3) {
-                    res.status(403).send(ec(4))
-                } else {
-                    if (pd.includes(p)) {
-                        res.status(403).send(ec(5))
+                    let p, y = false;
+                    const d = JSON.parse(fs.readFileSync('./links.json')), pd = d.map(i => i.path.replace(/^\//, ''))
+                    if (req.query.path) {
+                        p = encodeURI(req.query.path.replace(/^\s+/, '').replace(/\s+$/, ''));
                     } else {
-                        const j = `${serviceURL}${p}`, u = encodeURI(req.query.url);
-                        if ((j.length < u.length || !y) && config['only-shortened']) {
-                            const r = new URL(u)
-                            r.protocol = new URL(serviceURL).protocol
-                            if (j == r.href && !config['allow-redirect-loop']) {
-                                res.status(403).send(ec(7))
-                            } else {
-                                const f = JSON.parse(fs.readFileSync('./links.json')), b = JSON.parse(fs.readFileSync('./blacklist.json'))
-                                let q = false;
-                                if (`${r.origin}/` === serviceURL) {
-                                    const h = f.find(i => `/${i.path}` === r.pathname)
-                                    if (h) {
-                                        q = true
-                                    }
-                                }
-                                if (q && !config['allow-redirect-loop']) {
+                        let k = 0, l = 4;
+                        y = true;
+                        do {
+                            p = grs(l)
+                            k++;
+                            if (k % 100 === 0) {
+                                l++;
+                            }
+                        } while (pd.includes(p))
+                    }
+                    if (p.length < 3) {
+                        res.status(403).send(ec(4))
+                    } else {
+                        if (pd.includes(p)) {
+                            res.status(403).send(ec(5))
+                        } else {
+                            const j = `${serviceURL}${p}`, u = encodeURI(req.query.url);
+                            if ((j.length < u.length || !y) && config['only-shortened']) {
+                                const r = new URL(u)
+                                r.protocol = new URL(serviceURL).protocol
+                                if (j == r.href && !config['allow-redirect-loop']) {
                                     res.status(403).send(ec(7))
                                 } else {
-                                    d.push({
-                                        url: u,
-                                        path: p
-                                    })
-                                    fs.writeFileSync('./links.json', JSON.stringify(d, null, 2))
-                                    updateStats(0)
-                                    res.status(201).send({
-                                        url: u,
-                                        path: p,
-                                        c: "OK",
-                                        i: 0
-                                    })
+                                    const f = JSON.parse(fs.readFileSync('./links.json'))
+                                    let q = false;
+                                    if (`${r.origin}/` === serviceURL) {
+                                        const h = f.find(i => `/${i.path}` === r.pathname)
+                                        if (h) {
+                                            q = true
+                                        }
+                                    }
+                                    if (q && !config['allow-redirect-loop']) {
+                                        res.status(403).send(ec(7))
+                                    } else {
+                                        const v = JSON.parse(fs.readFileSync('./badwords.json'))
+                                        if (v.some(i => p.includes(i))) {
+                                            res.status(403).send(ec(10))
+                                        } else {
+                                            d.push({
+                                                url: u,
+                                                path: p
+                                            })
+                                            fs.writeFileSync('./links.json', JSON.stringify(d, null, 2))
+                                            updateStats(0)
+                                            res.status(201).send({
+                                                url: u,
+                                                path: p,
+                                                c: "OK",
+                                                i: 0
+                                            })
+                                        }
+                                    }
                                 }
+                            } else {
+                                res.status(403).send(ec(6))
                             }
-                        } else {
-                            res.status(403).send(ec(6))
                         }
                     }
                 }
