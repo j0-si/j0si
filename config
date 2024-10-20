@@ -1,0 +1,5 @@
+allow-redirect-loop=false
+only-shortened=true
+rate-limit=5
+port=1071
+url=http://yourdomain.tld/
