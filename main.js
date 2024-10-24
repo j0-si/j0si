@@ -42,7 +42,7 @@ app.post('/shorten', (req, res) => {
                     let p, y = false;
                     const d = JSON.parse(fs.readFileSync('./links.json')), pd = d.map(i => i.path.replace(/^\//, ''))
                     if (req.query.path) {
-                        p = encodeURI(req.query.path.replace(/^\s+/, '').replace(/\s+$/, ''));
+                        p = req.query.path.replace(/^\s+/, '').replace(/\s+$/, '');
                     } else {
                         let k = 0, l = 4;
                         y = true;
@@ -60,14 +60,15 @@ app.post('/shorten', (req, res) => {
                         if (pd.includes(p)) {
                             res.status(403).send(ec(5))
                         } else {
-                            const j = `${serviceURL}${p}`, u = encodeURI(req.query.url);
+                            const j = `${serviceURL}${p}`, u = decodeURIComponent(req.query.url);
                             if ((j.length < u.length || !y) && config['only-shortened']) {
                                 const r = new URL(u)
                                 r.protocol = new URL(serviceURL).protocol
                                 if (j == r.href && !config['allow-redirect-loop']) {
                                     res.status(403).send(ec(7))
                                 } else {
-                                    const f = JSON.parse(fs.readFileSync('./links.json'))
+                                    const f = JSON.parse(fs.readFileSync('./links.json')), du = f.find(_ => _.url === u && _.path.length <= 4)
+                                    if (y && du) p = du.path
                                     let q = false;
                                     if (`${r.origin}/` === serviceURL) {
                                         const h = f.find(i => `/${i.path}` === r.pathname)
@@ -82,10 +83,12 @@ app.post('/shorten', (req, res) => {
                                         if (v.some(i => p.includes(i))) {
                                             res.status(403).send(ec(10))
                                         } else {
-                                            d.push({
-                                                url: u,
-                                                path: p
-                                            })
+                                            if (!y || !du) {
+                                                d.push({
+                                                    url: u,
+                                                    path: p
+                                                })
+                                            }
                                             fs.writeFileSync('./links.json', JSON.stringify(d, null, 2))
                                             updateStats(0)
                                             res.status(201).send({

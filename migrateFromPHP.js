@@ -8,14 +8,14 @@ r.question('import links from: ', i => {
         try {
             console.log(encodeURI(l[j]) in m)
             if (m.includes(encodeURI(l[j]))) {
-                const w = g.find(i => i.path === encodeURI(l[j]))
+                const w = g.find(i => i.path === encodeURIComponent(l[j]))
                 w.url = fs.readFileSync(`${from}/${l[j]}/index.html`).toString().match(/content="https?:\/\/[^"]+"/g)[0].slice(9, -1)
                 console.log(`Updated url: ${l[j]}`)
                 u++
             } else {
                 g.push({
                     url: fs.readFileSync(`${from}/${l[j]}/index.html`).toString().match(/content="https?:\/\/[^"]+"/g)[0].slice(9, -1),
-                    path: encodeURI(l[j])
+                    path: encodeURIComponent(l[j])
                 })
                 console.log(`Added url: ${l[j]}`)
                 s++
