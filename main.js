@@ -172,6 +172,10 @@ if (_r.every(i=>i===true)) {
         isError ? console.error(clc) : console.log(clc)
         fs.appendFileSync(config['separate-logs'] ? `./logs/${lfd()}.log` : './.log', logCont+'\n')
     }
+    
+    function datestr(d, f) {
+        return `${f ? `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2,'0')} ` : ""}${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}${config['log-milliseconds']?`.${d.getMilliseconds().toString().padStart(3,'0')}`:''}`
+    }
 } else {
     const _f = ['links.json', 'config', 'htdocs/index.html'], _res = []
     for(let i in _r){_r[i]?null:_res.push(_f[i])}
@@ -185,11 +189,6 @@ function ec(num) {
         c: e[num] ?? `x${num}`,
         i: num
     }
-}
-
-
-function datestr(d, f) {
-    return `${f ? `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2,'0')} ` : ""}${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}${config['log-milliseconds']?`.${d.getMilliseconds().toString().padStart(3,'0')}`:''}`
 }
 
 function lfd() {
