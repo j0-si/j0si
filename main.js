@@ -15,7 +15,7 @@ const express = require('express'), app = express(), path = require('node:path')
 const _r = [fs.existsSync('./links.json'), fs.existsSync('./config'), fs.existsSync('./htdocs/index.html')]
 if (_r.every(i=>i===true)) {
     const config = {}
-    fs.readFileSync('./config').toString().replace(/\r/g, "").split('\n').forEach(i=>{if(i.startsWith("# ")){let I=i.split('=');config[I[0]]=/(true)|(false)/.test(I[1])?I[1]==='true':I[1]}})
+    fs.readFileSync('./config').toString().replace(/\r/g, "").split('\n').forEach(i=>{if(!i.startsWith("# ")){let I=i.split('=');if(I[1])config[I[0]]=/(true)|(false)/.test(I[1])?I[1]==='true':I[1]}})
     console.log(config)
     const serviceURL = config['url'], port = parseInt(config['port'])
     if (config['rate-limit'] >= 1) {
@@ -176,6 +176,7 @@ if (_r.every(i=>i===true)) {
     const _f = ['links.json', 'config', 'htdocs/index.html'], _res = []
     for(let i in _r){_r[i]?null:_res.push(_f[i])}
     console.error(`Some files are missing!: ${_res.join(', ')}\nnpm run init to initialize.`)
+    process.exit(1)
 }
 
 function ec(num) {
