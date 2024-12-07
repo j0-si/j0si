@@ -98,7 +98,7 @@ if (_r.every(i=>i===true)) {
                                                     c: ec(0),
                                                     i: 0
                                                 })
-                                                log(`${config['log-ip']`${req.ip}: `}shorten ${JSON.stringify(req.query, null, 4)}`,0);
+                                                log(`${config['log-ip']?`${req.ip}: `:''}shorten ${JSON.stringify(req.query, null, 4)}`,0);
                                             }
                                         }
                                     }
@@ -137,7 +137,7 @@ if (_r.every(i=>i===true)) {
                             })
                         } else {
                             updateStats(1)
-                            log(`${config['log-ip']`${req.ip}: `}access /${p}`,0);
+                            log(`${config['log-ip']?`${req.ip}: `:''}access /${p}`,0);
                             res.redirect(307, d[pd.findIndex(i => i === p)].url)
                         }
                     } else {
@@ -189,10 +189,10 @@ function ec(num) {
 
 
 function datestr(d, f) {
-    return `${f ? `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().padStart(2,'0')} ` : ""}${d.getHours().padStart(2,'0')}:${d.getMinutes().padStart(2,'0')}:${d.getSeconds().padStart(2,'0')}${config['log-milliseconds']?`.${d.getMilliseconds().padStart(3,'0')}`:''}`
+    return `${f ? `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2,'0')} ` : ""}${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}${config['log-milliseconds']?`.${d.getMilliseconds().toString().padStart(3,'0')}`:''}`
 }
 
 function lfd() {
     const d = new Date()
-    return `${new Date().getFullYear()}-${(d.getMonth()+1).padStart(2,'0')}-${d.getDate().padStart(2,'0')}`
+    return `${new Date().getFullYear()}-${(d.getMonth()+1).padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
 }
