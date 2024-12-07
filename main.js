@@ -13,7 +13,7 @@ function grs(length) {
 
 const express = require('express'), app = express(), path = require('node:path'), fs = require('node:fs'), { rateLimit } = require('express-rate-limit')
 const config = {}
-fs.readFileSync('./config').toString().replace(/\r/g, "").split('\n').forEach(i=>{let I=i.split('=');config[I[0]]=/(true)|(false)/.test(I[1])?I[1]==='true':I[1]})
+fs.readFileSync('./config').toString().replace(/\r/g, "").split('\n').forEach(i=>{if(i.startsWith("# ")){let I=i.split('=');config[I[0]]=/(true)|(false)/.test(I[1])?I[1]==='true':I[1]}})
 console.log(config)
 const serviceURL = config['url'], port = parseInt(config['port'])
 const t = rateLimit({
