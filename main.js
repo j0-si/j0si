@@ -113,7 +113,7 @@ if (_r.every(i=>i===true)) {
                 res.status(400).send(ec(1))
             }
         } catch (e) {
-            console.error(e)
+            log(e.message,1)
         }
     })
 
@@ -150,7 +150,7 @@ if (_r.every(i=>i===true)) {
                 }
             }
         } catch (e) {
-            log(e,1)
+            log(e.message,1)
         }
     })
 
@@ -163,16 +163,16 @@ if (_r.every(i=>i===true)) {
             a ? k.a++ : null
             fs.writeFileSync('./stats.json', JSON.stringify(k, null, 2))
         } catch (e) {
-            log(e,1)
+            log(e.message,1)
         }
     }
 
     function log(C, isError) {
-        const prefix = `[${datestr(new Date(), !config['separate-logs'])} ${isError ? "ERR!" : "INFO"}]`, logCont = C.split('\n').map(i=>prefix+i).join('\n'), clc = C.split('\n').map(i=>`[${datestr(new Date(),1)} ${isError ? "ERR!" : "INFO"}] ${i}`).join('\n')
+        const prefix = `[${datestr(new Date(), !config['separate-logs'])} ${isError ? "ERR!" : "INFO"}] `, logCont = C.split('\n').map(i=>prefix+i).join('\n'), clc = C.split('\n').map(i=>`[${datestr(new Date(),1)} ${isError ? "ERR!" : "INFO"}] ${i}`).join('\n')
         isError ? console.error(clc) : console.log(clc)
         fs.appendFileSync(config['separate-logs'] ? `./logs/${lfd()}.log` : './.log', logCont+'\n')
     }
-    
+
     function datestr(d, f) {
         return `${f ? `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2,'0')} ` : ""}${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}${config['log-milliseconds']?`.${d.getMilliseconds().toString().padStart(3,'0')}`:''}`
     }
@@ -193,5 +193,5 @@ function ec(num) {
 
 function lfd() {
     const d = new Date()
-    return `${new Date().getFullYear()}-${(d.getMonth()+1).padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
+    return `${new Date().getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
 }
