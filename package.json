@@ -1,12 +1,18 @@
 {
   "name": "j0.si",
   "version": "1.0.0",
-  "description": "j0.si nodejs version",
+  "description": "j0.si link shortener",
   "main": "main.js",
   "author": "driplase",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
     "express-rate-limit": "^7.4.1"
+  },
+  "scripts": {
+    "start": "node ./main.js",
+    "init": "node ./initialization.js",
+    "initialization": "node ./initialization.js",
+    "migrate": "node ./migrateFromPHP.js"
   }
 }

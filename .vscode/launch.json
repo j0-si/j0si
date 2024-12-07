@@ -5,25 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "node initialization.js",
+            "command": "npm run init",
             "name": "Initialization",
             "request": "launch",
             "type": "node-terminal"
         },
         {
-            "command": "node migrateFromPHP.js",
+            "command": "npm run migirate",
             "name": "migrateFromPHP.js",
             "request": "launch",
             "type": "node-terminal"
         },
         {
-            "type": "node",
+            "command": "npm run start",
+            "name": "start",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\main.js"
+            "type": "node-terminal"
         }
     ]
 }

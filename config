@@ -1,5 +1,22 @@
-allow-redirect-loop=false
-only-shortened=true
-rate-limit=5
-port=1071
 url=http://yourdomain.tld/
+port=80
+
+# allow redirect loop.
+#   https://example.com/y6z0x  --->   https://example.com/2yq
+#   (https://example.com/2yq)  ---> (https://example.com/y6x0z)
+allow-redirect-loop=false
+
+# deny shorter links if the result url is not shortened and custom pathname is not specified.
+only-shortened=true
+
+# rate limit requests per minute
+rate-limit=300
+
+# log user's IP when a link is created or visited.
+log-ip=true
+
+# separate log files by date.
+separate-logs=true
+
+# log milliseconds too. in most cases, you don't need to enable this.
+log-milliseconds=false
