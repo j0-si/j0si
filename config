@@ -6,11 +6,14 @@ port=80
 #   (https://example.com/2yq)  ---> (https://example.com/y6x0z)
 allow-redirect-loop=false
 
-# deny shorter links if the result url is not shortened and custom pathname is not specified.
+# deny short links if the result url is not shortened and custom pathname is not specified.
 only-shortened=true
 
-# rate limit requests per minute
-rate-limit=300
+# rate-limit: how long to remember requests for, in milliseconds.
+windowMs=60e3
+
+# rate-limit: how many requests to allow.
+rate-limit=250
 
 # log user's IP when a link is created or visited.
 log-ip=true
@@ -20,3 +23,8 @@ separate-logs=true
 
 # log milliseconds too. in most cases, you don't need to enable this.
 log-milliseconds=false
+
+# align ip address numbers in logs.
+#  192.168.  3.  7
+#  192.168. 58.  5
+align-ip-in-log=true

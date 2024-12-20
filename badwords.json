@@ -1,4 +1,6 @@
 [
     "index.html",
-    "index.php"
+    "index.php",
+    "stats.json",
+    "shorten"
 ]
