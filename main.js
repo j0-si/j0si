@@ -13,6 +13,12 @@ function grs(length) {
 
 const express = require('express'), app = express(), path = require('node:path'), fs = require('node:fs'), { rateLimit } = require('express-rate-limit')
 const _r = [fs.existsSync('./links.json'), fs.existsSync('./config'), fs.existsSync('./htdocs/index.html')]
+
+const readline = require('node:readline');
+const { stdin: input, stdout: output } = require('node:process');
+
+const rl = readline.createInterface({ input, output });
+
 if (_r.every(i=>i===true)) {
     const config = {}
     fs.readFileSync('./config').toString().replace(/\r/g, "").split('\n').forEach(i=>{if(!i.startsWith("# ")){let I=i.split('=');if(I[1])config[I[0]]=/(true)|(false)/.test(I[1])?I[1]==='true':I[1]}})
@@ -48,7 +54,7 @@ if (_r.every(i=>i===true)) {
                         let p, y = false;
                         const d = JSON.parse(fs.readFileSync('./links.json')), pd = d.map(i => i.path.replace(/^\//, ''))
                         if (req.query.path) {
-                            p = req.query.path.replace(/^\s+/, '').replace(/\s+$/, '');
+                            p = encodeURIComponent(req.query.path.replace(/^\s+/, '').replace(/\s+$/, ''));
                         } else {
                             let k = 0, l = 4;
                             y = true;
@@ -201,3 +207,17 @@ function lfd() {
     const d = new Date()
     return `${new Date().getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`
 }
+
+rl.on('line', input => {
+    const cmdArgs = input.split(' ');
+
+    if (cmdArgs.length < 1) return;
+
+    if (['check', 'info'].includes(cmdArgs?.at(0))) {
+        const links = JSON.parse(fs.readFileSync('./links.json'));
+
+        const result = links.find(link => link.path === cmdArgs?.at(1).replace(/^\//, ''))
+
+        console.log(result);
+    }
+})

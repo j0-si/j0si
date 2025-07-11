@@ -1,1 +1,298 @@
-<!-- j0.si default preset, replace the initkit html if you want to use your own custom page --><!DOCTYPE html><html prefix="og: https://ogp.me/ns#"><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"><style>.caveat{font-family:"Caveat",cursive;font-optical-sizing:auto;font-weight:600;font-style:normal}nav{top:0;position:fixed;text-align:center;backdrop-filter:blur(8px);z-index:10000;width:100vw;background-color:#000000b0;box-shadow:#000 0 0 10px}.nx{font-size:27px;text-decoration:none}.lg{color:#fff;text-shadow:0 0 6.4px}.ctl{font-size:12vh}body{animation:bg 15s linear infinite}@keyframes bg{0%{background-color:#111222}50%{background-color:#222333}100%{background-color:#111222}}.contentn{display:inline-block}.urlbtn{--bs-btn-color:#ffffff;--bs-btn-hover-bg:#555666;--bs-btn-bg:#222333}body{color:white;}.q{position:fixed;z-index:1000;display:flex;justify-content:center;width:100%;flex-direction:column;align-items:center}.j{box-shadow:0 0 20px;min-width:36vw;transition:.64s cubic-bezier(.16,1,.3,1)}</style><title>#host</title><meta property="og:title" content="#host"><meta property="og:url" content="#url"><meta name="description" content="Link shortener by #host"><meta name="og:description" content="Link shortener by #host"><meta name="application-name" content="#host"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body class="text-center position-relative"><nav class="nav justify-content-center"><div class="nv"><h3 class="caveat"><a href="./" class="nx lg">#host</a></h3></div></nav><div id="a" class="q"></div><div class="position-relative top-50 mx-auto text-center contentn" id="m"><h1 class="caveat lg ctl">#host</h1><div class="py-2"></div><div class="input-group mb-3"><form class="input-group justify-content-center" id="q" onsubmit="return false"><div class="input-group"><input class="form-control" type="url" placeholder="Enter a long url" style="width:50vw" name="link" id="l" minlength=1 required><button class="btn btn-outline-secondary urlbtn" type="submit" id="sb" name="snd">Shorten long url</button></div><div><div class="btn-group mt-2"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">options</button><div class="mb-3"><ul class="dropdown-menu position-absolute" style="padding: 5px; width: 48vw; background-color: #333444; border-radius:8px"><div class="input-group"><span class="input-group-text" id="basic-addon3" style="background-color:#222333;color:#fff;user-select:none;">#url/</span><input class="form-control" type="text" placeholder="Custom pathname (Optional, min: 3)" name="path" value="" minlength=3 id="ph"></div></ul></div></div></div></form></div><p style="text-shadow:0 0 5px" id="msg"></p></div><script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script><script>const G=document.createElement('div'),m=document.getElementById("m"),w=document.getElementById('sb'),q=document.getElementById('q'),a=document.getElementById("a");let I=null;function d(z){const p=["Success!","Please enter a URL.","The pathname you entered is not allowed.","","Custom pathname must be at least 3 characters long.","The pathname you entered is already taken.","Try using custom pathname.","Shortened link mustn't be a redirect loop.","Entered URL is blacklisted.","Rate limited.","Custom pathname includes badwords.",null];return p[z]??`x${z}`}function c(s,f,k){return`<div class="alert alert-${s?"success":"danger"} j" role="alert" style="top:-100px">${d(f)}${k?` <a target="_blank" href="${location.origin}/${k}">${location.origin}/${k}</a>`:""}</div>`}function g(t,k){if(I){clearTimeout(I.t),I.e.remove()}G.innerHTML=c(t===0,t,k);const n=G.firstElementChild;a.appendChild(n);const E=setInterval(()=>{n.style.top="57px",t!==0?u=setInterval(()=>{n.style.top="-100px",clearInterval(u);const H=setInterval(()=>{n.remove(),clearInterval(H)},640)},1500+(t===0)*8500):null,clearInterval(E)},16);I={e:n,t:E}}function D(){o.textContent=`${Math.round(_[2]).toLocaleString()} links shortened, Have been accessed ${Math.round(_[3]).toLocaleString()} times`}let h=0,v=0,x=0,y=0,_=[0,0,0,0];async function F(C){const A=await fetch('./stats.json',{method:"GET"}),B=JSON.parse(await A.text());(isNaN(B.g)||isNaN(B.a))?null:(()=>{_[0]=B.g,_[1]=B.a;C?(_[2]=_[0],_[3]=_[1],D()):null})()}document.addEventListener("mousemove",e=>{h=e.clientX-window.innerWidth/2,v=e.clientY-window.innerHeight/2}),setInterval(()=>{x+=(h/32-x)/16,y+=(v/32-y)/16,m.style.transform=`translate(${x}px,${y+.35*window.innerHeight}px)`,_[2]+=(_[0]-_[2])/8,_[3]+=(_[1]-_[3])/8,D()},16);const o=document.getElementById('msg'),b=document.getElementById('ph'),l=document.getElementById('l');b.addEventListener('invalid',()=>{g(4);});q.addEventListener('submit',e=>{if(e.isTrusted){w.disabled=1;$.post(`${location.origin}/shorten?url=${encodeURIComponent(l.value)}${b.value?`&path=${encodeURIComponent(b.value)}`:""}`).done(r=>{l.value="",b.value="",w.disabled=0,g(r.i,r.path);}).fail(i=>{w.disabled=0,g(i.responseJSON.i)})}else g(11)}),w.addEventListener('click',e=>{e.isTrusted?null:e.preventDefault(),g(11)}),F(1),setInterval(async()=>await F(0),720)</script></body></html>
+<!-- j0.si default preset, replace the initkit html if you want to use your own custom page --><!DOCTYPE html>
+<html prefix="og: https://ogp.me/ns#">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <style>
+      .caveat {
+        font-family: "Caveat", cursive;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+      }
+      nav {
+        top: 0;
+        position: fixed;
+        text-align: center;
+        backdrop-filter: blur(8px);
+        z-index: 10000;
+        width: 100vw;
+        background-color: #000000b0;
+        box-shadow: #000 0 0 10px;
+      }
+      .nx {
+        font-size: 27px;
+        text-decoration: none;
+      }
+      .lg {
+        color: #fff;
+        text-shadow: 0 0 6.4px;
+      }
+      .ctl {
+        font-size: 12vh;
+      }
+      body {
+        animation: bg 15s linear infinite;
+      }
+      @keyframes bg {
+        0% {
+          background-color: #111222;
+        }
+        50% {
+          background-color: #222333;
+        }
+        100% {
+          background-color: #111222;
+        }
+      }
+      .contentn {
+        display: inline-block;
+      }
+      .urlbtn {
+        --bs-btn-color: #ffffff;
+        --bs-btn-hover-bg: #555666;
+        --bs-btn-bg: #222333;
+      }
+      body {
+        color: white;
+      }
+      .q {
+        position: fixed;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+      }
+      .j {
+        box-shadow: 0 0 20px;
+        min-width: 36vw;
+        transition: 0.64s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+    <title>#host</title>
+    <meta property="og:title" content="#host" />
+    <meta property="og:url" content="#url" />
+    <meta name="description" content="Link shortener by #host" />
+    <meta name="og:description" content="Link shortener by #host" />
+    <meta name="application-name" content="#host" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+  <body class="text-center position-relative">
+    <nav class="nav justify-content-center">
+      <div class="nv">
+        <h3 class="caveat"><a href="./" class="nx lg">#host</a></h3>
+      </div>
+    </nav>
+    <div id="a" class="q"></div>
+    <div class="position-relative top-50 mx-auto text-center contentn" id="m">
+      <h1 class="caveat lg ctl">#host</h1>
+      <div class="py-2"></div>
+      <div class="input-group mb-3">
+        <form
+          class="input-group justify-content-center"
+          id="q"
+          onsubmit="return false"
+        >
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="url"
+              placeholder="Enter a long url"
+              style="width: 50vw"
+              name="link"
+              id="l"
+              minlength="1"
+              required
+            /><button
+              class="btn btn-outline-secondary urlbtn"
+              type="submit"
+              id="sb"
+              name="snd"
+            >
+              Shorten long url
+            </button>
+          </div>
+          <div>
+            <div class="btn-group mt-2">
+              <button
+                class="btn btn-secondary btn-sm dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                options
+              </button>
+              <div class="mb-3">
+                <ul
+                  class="dropdown-menu position-absolute"
+                  style="
+                    padding: 5px;
+                    width: 48vw;
+                    background-color: #333444;
+                    border-radius: 8px;
+                  "
+                >
+                  <div class="input-group">
+                    <span
+                      class="input-group-text"
+                      id="basic-addon3"
+                      style="
+                        background-color: #222333;
+                        color: #fff;
+                        user-select: none;
+                      "
+                      >#url/</span
+                    ><input
+                      class="form-control"
+                      type="text"
+                      placeholder="Custom pathname (Optional, min: 3)"
+                      name="path"
+                      value=""
+                      minlength="3"
+                      id="ph"
+                    />
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <p style="text-shadow: 0 0 5px" id="msg"></p>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const G = document.createElement("div"),
+        m = document.getElementById("m"),
+        w = document.getElementById("sb"),
+        q = document.getElementById("q"),
+        a = document.getElementById("a");
+      let I = null;
+      function d(z) {
+        const p = [
+          "Success!",
+          "Please enter a URL.",
+          "The pathname you entered is not allowed.",
+          "",
+          "Custom pathname must be at least 3 characters long.",
+          "The pathname you entered is already taken.",
+          "Try using custom pathname.",
+          "Shortened link mustn't be a redirect loop.",
+          "Entered URL is blacklisted.",
+          "Rate limited.",
+          "Custom pathname includes badwords.",
+          null,
+        ];
+        return p[z] ?? `x${z}`;
+      }
+      function c(s, f, k) {
+        return `<div class="alert alert-${s ? "success" : "danger"} j" role="alert" style="top:-100px">${d(f)}${k ? ` <a target="_blank" href="${location.origin}/${k}">${location.origin}/${k}</a>` : ""}</div>`;
+      }
+      function g(t, k) {
+        if (I) {
+          clearTimeout(I.t), I.e.remove();
+        }
+        G.innerHTML = c(t === 0, t, k);
+        const n = G.firstElementChild;
+        a.appendChild(n);
+        const E = setInterval(() => {
+          (n.style.top = "57px"),
+            t !== 0
+              ? (u = setInterval(
+                  () => {
+                    (n.style.top = "-100px"), clearInterval(u);
+                    const H = setInterval(() => {
+                      n.remove(), clearInterval(H);
+                    }, 640);
+                  },
+                  1500 + (t === 0) * 8500,
+                ))
+              : null,
+            clearInterval(E);
+        }, 16);
+        I = { e: n, t: E };
+      }
+      function D() {
+        o.textContent = `${Math.round(_[2]).toLocaleString()} links shortened, Have been accessed ${Math.round(_[3]).toLocaleString()} times`;
+      }
+      let h = 0,
+        v = 0,
+        x = 0,
+        y = 0,
+        _ = [0, 0, 0, 0];
+      async function F(C) {
+        const A = await fetch("./stats.json", { method: "GET" }),
+          B = JSON.parse(await A.text());
+        isNaN(B.g) || isNaN(B.a)
+          ? null
+          : (() => {
+              (_[0] = B.g), (_[1] = B.a);
+              C ? ((_[2] = _[0]), (_[3] = _[1]), D()) : null;
+            })();
+      }
+      document.addEventListener("mousemove", (e) => {
+        (h = e.clientX - window.innerWidth / 2),
+          (v = e.clientY - window.innerHeight / 2);
+      }),
+        setInterval(() => {
+          (x += (h / 32 - x) / 16),
+            (y += (v / 32 - y) / 16),
+            (m.style.transform = `translate(${x}px,${y + 0.35 * window.innerHeight}px)`),
+            (_[2] += (_[0] - _[2]) / 8),
+            (_[3] += (_[1] - _[3]) / 8),
+            D();
+        }, 16);
+      const o = document.getElementById("msg"),
+        b = document.getElementById("ph"),
+        l = document.getElementById("l");
+      b.addEventListener("invalid", () => {
+        g(4);
+      });
+      q.addEventListener("submit", (e) => {
+        if (e.isTrusted) {
+          w.disabled = 1;
+          $.post(
+            `${location.origin}/shorten?url=${encodeURIComponent(l.value)}${b.value ? `&path=${encodeURIComponent(b.value)}` : ""}`,
+          )
+            .done((r) => {
+              (l.value = ""), (b.value = ""), (w.disabled = 0), g(r.i, r.path);
+            })
+            .fail((i) => {
+              (w.disabled = 0), g(i.responseJSON.i);
+            });
+        } else g(11);
+      }),
+        w.addEventListener("click", (e) => {
+          e.isTrusted ? null : e.preventDefault(), g(11);
+        }),
+        F(1),
+        setInterval(async () => await F(0), 720);
+    </script>
+  </body>
+</html>

@@ -11,7 +11,7 @@
             "type": "node-terminal"
         },
         {
-            "command": "npm run migirate",
+            "command": "npm run migrate",
             "name": "migrateFromPHP.js",
             "request": "launch",
             "type": "node-terminal"
