@@ -94,21 +94,21 @@ if (_r.every(i=>i===true)) {
                                             if (v.some(i => p.includes(i))) {
                                                 res.status(403).send(ec(10))
                                             } else {
+                                                let data = {
+                                                    url: u,
+                                                    path: p
+                                                }
                                                 if (!y || !du) {
-                                                    d.push({
-                                                        url: u,
-                                                        path: p
-                                                    })
+                                                    d.push(data)
                                                 }
                                                 fs.writeFileSync('./links.json', JSON.stringify(d, null, 2))
                                                 updateStats(0)
                                                 res.status(201).send({
-                                                    url: u,
-                                                    path: p,
+                                                    ...data,
                                                     c: ec(0),
                                                     i: 0
                                                 })
-                                                log(`${config['log-ip']?`${ipL(req.ip)}: `:''}shorten ${JSON.stringify(req.query, null, 4)}`,0);
+                                                log(`${config['log-ip']?`${ipL(req.ip)}: `:''}shorten ${JSON.stringify(data, null, 4)}`,0);
                                             }
                                         }
                                     }
